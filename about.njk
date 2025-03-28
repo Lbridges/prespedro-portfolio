@@ -6,7 +6,123 @@
     <title>About President Pedro</title>
 </head>
 <body>
-    <h1>President Pedro Configuration</h1>
-    <p>VScode with WSL, github repo, github pages, custom domain with github A record IPs</p>
+    <h1>How President Pedro's Portfolio is Served</h1>
+
+<p>
+  This document outlines the process by which the content you see at
+  presidentpedro.com and localhost:8080 is generated and served.
+</p>
+
+<h2>Local Development (localhost:8080)</h2>
+
+<p>
+  During local development, you will be working with the following files:
+</p>
+
+<ul>
+  <li>
+    <strong>HTML and Nunjucks Files:</strong> These files contain the structure and
+    content of your website. They are located in the root of your project
+    directory.
+  </li>
+  <li>
+    <strong>.eleventy.js:</strong> This file contains the configuration for 11ty,
+    the static site generator used to build the website.
+  </li>
+  <li>
+    <strong>package.json and package-lock.json:</strong> These files manage the
+    project's dependencies.
+  </li>
+</ul>
+
+<p>
+  When you run the command <code>npm start</code>, 11ty starts a local
+  development server. This server performs the following actions:
+</p>
+
+<ol>
+  <li>
+    <strong>Build Process:</strong> 11ty processes your HTML and Nunjucks files
+    based on the configuration in <code>.eleventy.js</code>.
+  </li>
+  <li>
+    <strong>Output to <code>_site</code>:</strong> 11ty generates the final HTML
+    files and places them in the <code>_site</code> directory.
+  </li>
+  <li>
+    <strong>Local Server:</strong> The development server serves the files from the
+    <code>_site</code> directory, making them accessible at
+    <code>localhost:8080</code>.
+  </li>
+  <li>
+    <strong>Live Reloading:</strong> Any changes you make to your source files
+    will trigger an automatic rebuild and refresh in your browser.
+  </li>
+</ol>
+
+<h2>Deployment (presidentpedro.com)</h2>
+
+<p>
+  When you push changes to your GitHub repository's <code>development</code>
+  branch, GitHub Pages automatically deploys your website. This process
+  involves the following steps:
+</p>
+
+<ol>
+  <li>
+    <strong>Repository Clone:</strong> GitHub Pages clones your repository to its
+    servers.
+  </li>
+  <li>
+    <strong>Build Process:</strong> GitHub Pages runs the command
+    <code>npm run build</code>, which executes 11ty. 11ty processes your HTML
+    and Nunjucks files and generates the final HTML files in the
+    <code>_site</code> directory.
+  </li>
+  <li>
+    <strong>Serving Content:</strong> GitHub Pages then serves the static HTML
+    files from the <code>_site</code> directory, making your website accessible
+    at <code>presidentpedro.com</code>.
+  </li>
+</ol>
+
+<h2>Important Points:</h2>
+
+<ul>
+  <li>
+    <strong><code>_site</code> Directory:</strong> The <code>_site</code> directory
+    contains the final, generated HTML files that are served to users. This
+    directory is not committed to the repository. It is generated during the
+    build process.
+  </li>
+  <li>
+    <strong><code>.gitignore</code>:</strong> The <code>.gitignore</code> file prevents
+    the <code>_site</code> directory from being tracked by Git. This is because
+    the <code>_site</code> directory contains generated files.
+  </li>
+  <li>
+    <strong>Source Files:</strong> The HTML and Nunjucks files in your project
+    directory are the source files. These are the files you edit and commit to
+    your repository.
+  </li>
+  <li>
+    <strong>GitHub Pages Configuration:</strong> GitHub Pages is configured to
+    deploy the root directory of the repository, which contains the generated
+    <code>index.html</code> file.
+  </li>
+  <li>
+    <strong>Nunjucks Template Engine:</strong> Nunjucks is used as the template
+    engine, which allows for clean URLs.
+  </li>
+  <li>
+    <strong>No Sensitive Information:</strong> This setup does not expose any
+    sensitive information that could be used to harm the project.
+  </li>
+  <li>
+    <strong>Static Site Generation:</strong> 11ty is a static site generator,
+    meaning it generates static HTML files that are then served by GitHub
+    Pages.
+  </li>
+</ul>
 </body>
 </html>
