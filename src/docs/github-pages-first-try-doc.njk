@@ -1,0 +1,70 @@
+---
+title: GitHub Pages Setup, Initial Attempts and Challenges
+date: 2025-03-30
+category: GitHub Pages
+tags:
+  - deployment
+  - static site hosting
+  - troubleshooting
+  - repository structure
+excerpt: Documenting our initial attempts to set up GitHub Pages and the challenges we encountered with repository structure and GitHub Pages' limitations.
+---
+
+<h1>{{ title }}</h1>
+
+<h2>Initial Setup with GitHub Pages</h2>
+
+<p>Our initial approach to deploying PresidentPedro.com involved utilizing GitHub Pages. We aimed to leverage its simplicity for hosting static websites. However, we soon encountered several challenges that required us to rethink our strategy.</p>
+
+<h3>Single Development Branch</h3>
+
+<p>We began with a single <code>development</code> branch in our Git repository. This branch contained all our project files, including 11ty source files and the generated <code>_site</code> folder. We quickly realized that this structure would present some issues.</p>
+
+<h3>Successful Custom Domain Configuration</h3>
+
+<p>On the positive side, we successfully configured our custom domain (presidentpedro.com) to work with GitHub Pages. This involved:</p>
+
+<ul>
+  <li>Adding A records in our Squarespace DNS settings (where our domain is managed).</li>
+  <li>Creating a <code>CNAME</code> file in the root of our repository with our custom domain.</li>
+</ul>
+
+<p>This confirmed that we could point our domain to GitHub Pages, which was a crucial first step.</p>
+
+<h3>The `index.html` Requirement</h3>
+
+<p>We observed that GitHub Pages had specific expectations regarding the <code>index.html</code> file. When we placed a simple <code>index.html</code> file in the root of our repository, it was correctly served at presidentpedro.com. However, this revealed a key limitation: GitHub Pages expects to find a static `index.html` file in the root of the repository.</p>
+
+<h3>The `index.njk` Challenge</h3>
+
+<p>When we attempted to use our 11ty template file (<code>index.njk</code>) as our index page (replacing the static `index.html`), we encountered a 404 error. This highlighted the fact that GitHub Pages doesn't directly process Nunjucks templates. It serves static files, and our 11ty build process generates these static files.</p>
+
+<h3>Local Development Setup Success</h3>
+
+<p>In parallel with our GitHub Pages attempts, we successfully set up our local development environment. We encountered no significant issues with Node.js or npm installation. This was a positive step, as it allowed us to work more efficiently locally.</p>
+
+<h3>GitHub Pages Limitations and File Structure Issues</h3>
+
+<p>The primary challenges we faced were related to GitHub Pages' limitations and our initial repository file structure:</p>
+
+<ul>
+  <li>GitHub Pages' requirement for a static <code>index.html</code> file in the root.</li>
+  <li>Our single-branch structure, which mixed source files and generated output.</li>
+  <li>The inability of GitHub Pages to directly process 11ty templates.</li>
+</ul>
+
+<h2>A New Approach: Best Practices and Shareability</h2>
+
+<p>After several attempts to find a workaround that would satisfy GitHub Pages' requirements, we decided to take a different approach. We wanted to establish a project structure that:</p>
+
+<ul>
+  <li>Adhered to best practices.</li>
+  <li>Would work beyond the limitations of GitHub Pages.</li>
+  <li>Would be easy for other beginners to understand and follow.</li>
+</ul>
+
+<p>We realized that relying on workarounds to accommodate GitHub Pages would ultimately lead to a more complex and less maintainable project. We wanted to create a project that we could confidently share with others, without overwhelming them with immediate, GitHub Pages-specific solutions.</p>
+
+<h2>The Decision to Restructure</h2>
+
+<p>This realization led us to the decision to restructure our repository and implement a proper build and deployment process. This involved adopting a multi-branch strategy and leveraging GitHub Actions to automate the build and deployment, which we will cover in the next document.</p>
