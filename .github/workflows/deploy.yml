@@ -1,34 +1,33 @@
-name: Deploy to GitHub Pages # Name of the workflow
+name: Deploy to GitHub Pages
 
-on: # Triggers for the workflow
+on:
   push:
     branches:
-      - src # Trigger when changes are pushed to the src branch
+      - src
 
-jobs: # Defines the jobs to run
-  build-and-deploy: # Name of the job
-    runs-on: ubuntu-latest # Specifies the operating system for the job
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-    steps: # Defines the steps within the job
+    steps:
       - name: Checkout code
-        uses: actions/checkout@v3 # Checks out the code from the repository
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3 # Sets up Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '18' # Specifies the Node.js version
+          node-version: '18'
 
       - name: Install dependencies
-        run: npm install # Installs the project dependencies
+        run: npm install
 
       - name: Build 11ty site
-        run: npm run build # Builds the 11ty site
+        run: npm run build
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3 # Deploys the built site to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # Uses the GitHub Actions token
-          publish_dir: ./_site # Specifies the directory to deploy
-          destination_folder: . #deploy to the root of the build branch.
-          publish_branch: build # Specifies the branch to deploy to
-          cname: presidentpedro.com #tells github pages to use the cname file.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: build
+          cname: presidentpedro.com
