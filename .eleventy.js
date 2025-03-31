@@ -3,7 +3,16 @@ module.exports = function(eleventyConfig) {
 
   // Create a 'docs' collection
   eleventyConfig.addCollection("docs", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("src/docs/*.njk");
+    return collectionApi.getFilteredByGlob("src/docs/*.njk").filter(item => {
+      return item.fileSlug !== "index";
+    });
+  });
+
+  // Create a 'blog' collection
+  eleventyConfig.addCollection("blog", function(collectionApi) {
+    return collectionApi.getFilteredByGlob("src/blog/*.njk").filter(item => {
+      return item.fileSlug !== "index";
+    });
   });
 
   return {
