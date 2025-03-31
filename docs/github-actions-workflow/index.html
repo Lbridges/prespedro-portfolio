@@ -1,0 +1,260 @@
+
+<h1>Implementing a Robust Deployment Workflow with GitHub Actions</h1>
+
+<h2>Introduction</h2>
+
+<p>This document outlines the steps involved in setting up a static website built with 11ty (Eleventy) and deployed using GitHub Pages and GitHub Actions. It aims to provide a clear and concise guide for developers who want to automate their deployment process and host their 11ty sites on GitHub Pages.</p>
+
+<h2>Prerequisites</h2>
+
+<p>Before proceeding, ensure you have the following:</p>
+
+<ul>
+  <li>A GitHub account</li>
+  <li>Node.js and npm installed</li>
+  <li>Git installed and configured</li>
+  <li>VS Code (or your preferred code editor)</li>
+  <li>GitHub Desktop (optional, but recommended)</li>
+  <li>Basic understanding of HTML, CSS, and JavaScript</li>
+  <li>Basic understanding of 11ty</li>
+</ul>
+
+<h2>Steps</h2>
+
+<h3>Project Setup (11ty)</h3>
+
+<p>If you haven't already, set up your 11ty project with the following file structure:</p>
+
+<pre>
+prespedro-portfolio/
+├── src/          (11ty source files)
+│   └── index.njk
+├── .eleventy.js   (11ty configuration)
+├── .gitignore
+├── CNAME           (custom domain file)
+├── package-lock.json
+└── package.json
+</pre>
+
+<p>Configure your <code>.eleventy.js</code> file to use <code>src</code> as the input directory and <code>_site</code> as the output directory:</p>
+
+<pre>
+module.exports = function (eleventyConfig) {
+  return {
+    dir: {
+      input: "src",
+      output: "_site",
+    },
+  };
+};
+</pre>
+
+<p>Create a <code>.gitignore</code> file to exclude <code>node_modules</code> and <code>_site</code> from version control:</p>
+
+<pre>
+node_modules
+_site
+</pre>
+
+<p>Create a <code>CNAME</code> file in the root directory with your custom domain (e.g., presidentpedro.com).</p>
+
+<p>Install your project dependencies using <code>npm install</code>.</p>
+
+<h3>Branching Strategy</h3>
+
+<p>Establish a branching strategy with three key branches:</p>
+
+<ul>
+  <li><strong>development Branch:</strong> Used for local development. Contains all source files, configuration files, and <code>node_modules</code> (excluded from version control).</li>
+  <li><strong>src Branch:</strong> Mirrors the development branch. Used by GitHub Actions for building the site.</li>
+  <li><strong>build Branch:</strong> Used by GitHub Pages to serve the static site. Initially, only contains the <code>CNAME</code> file.</li>
+</ul>
+
+<h3>GitHub Actions Workflow</h3>
+
+<p>Automate your deployment process using GitHub Actions:</p>
+
+<ol>
+  <li>Create a <code>.github/workflows</code> directory in the <code>src</code> branch.</li>
+  <li>Create a <code>deploy.yml</code> file in the <code>workflows</code> directory with the following content:</li>
+</ol>
+
+<pre>
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - src
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build 11ty site
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: $
+          publish_dir: ./_site
+          publish_branch: build
+          cname: presidentpedro.com
+</pre>
+
+<h3>GitHub Pages Setup</h3>
+
+<p>Configure GitHub Pages to serve your site:</p>
+
+<ul>
+  <li>Go to your repository's "Settings" tab.</li>
+  <li>Click on "Pages" in the left sidebar.</li>
+  <li>Under "Build and deployment," set "Branch" to "build" and the folder to "/(root)".</li>
+  <li>Enter your custom domain in the "Custom domain" field.</li>
+  <li>Configure your DNS settings with A records pointing to GitHub Pages IP addresses.</li>
+</ul>
+
+<h3>Repository Settings</h3>
+
+<p>Ensure that GitHub Actions has the necessary permissions:</p>
+
+<ul>
+  <li>Go to your repository's "Settings" tab.</li>
+  <li>Click on "Actions" > "General" in the left sidebar.</li>
+  <li>Ensure that "Read and write permissions" is selected in the "Workflow permissions" section.</li>
+</ul>
+
+<h3>Deployment Process</h3>
+
+<p>Deploy your site by following these steps:</p>
+
+<ul>
+  <li>Make changes to your 11ty site in the <code>src</code> branch.</li>
+  <li>Commit and push your changes to the <code>src</code> branch.</li>
+  <li>GitHub Actions will automatically build the site and deploy it to the <code>build</code> branch.</li>
+  <li>GitHub Pages will serve the site from the <code>build</code> branch.</li>
+</ul>
+
+<h3>Troubleshooting</h3>
+
+<p>Address common issues:</p>
+
+<ul>
+  <li><strong>Permission Errors:</strong> Ensure that "Read and write permissions" are enabled for GitHub Actions in your repository settings.</li>
+  <li><strong>Build Errors:</strong> Check the GitHub Actions workflow logs for error messages.</li>
+  <li><strong>Deployment Errors:</strong> Verify your GitHub Pages settings and DNS configuration.</li>
+  <li><strong>Node Modules:</strong> Remember to run <code>npm install</code> on both the <code>development</code> and <code>src</code> branches.</li>
+</ul>
+
+<h3>Benefits</h3>
+
+<p>This workflow provides several benefits:</p>
+
+<ul>
+  <li>Automated deployment process</li>
+  <li>Consistent and reliable deployments</li>
+  <li>Improved workflow efficiency</li>
+  <li>Easy collaboration with others</li>
+</ul>
+
+<p>This document should serve as a valuable resource for you and anyone else who wants to set up GitHub Pages with GitHub Actions and 11ty. Feel free to add more details or customize it to fit your specific needs.</p>
+
+<h3>Sources</h3>
+
+<p>The following resources were helpful in developing this workflow:</p>
+
+<ul>
+  <li><a href="https://github.com/AlwaysOnTV/AlwaysOnTV">https://github.com/AlwaysOnTV/AlwaysOnTV</a></li>
+  <li><a href="https://juejin.cn/post/7317152128104955940">https://juejin.cn/post/7317152128104955940</a></li>
+  <li><a href="https://medium.com/@nathvichea/github-action-to-deploy-docusaurus-8c297eaf1514">https://medium.com/@nathvichea/github-action-to-deploy-docusaurus-8c297eaf1514</a></li>
+  <li><a href="https://github.com/KakaoCup/Kakao">https://github.com/KakaoCup/Kakao</a></li>
+</ul>
+
+<h2>Integrating GitHub Desktop (Optional)</h2>
+
+<p>GitHub Desktop can simplify Git operations:</p>
+
+<h3>Install GitHub Desktop</h3>
+
+<p>If you don't have it already, download and install GitHub Desktop from <a href="https://desktop.github.com/">desktop.github.com</a>.</p>
+
+<h3>Add Your Repository</h3>
+
+<p>Open GitHub Desktop and add your repository.</p>
+
+<h3>Branch Management</h3>
+
+<p>Use GitHub Desktop to easily switch between branches, create new branches, view history, and manage merges.</p>
+
+<h3>Using GitHub Desktop with the Workflow</h3>
+
+<p>Perform the following steps visually:</p>
+
+<ul>
+  <li><strong>Switching Branches:</strong> Easily switch between the <code>src</code> and <code>build</code> branches.</li>
+  <li><strong>Committing Changes:</strong> Stage and commit changes with clear descriptions.</li>
+  <li><strong>Pushing Changes:</strong> Push your commits to the remote repository.</li>
+  <li><strong>Viewing History:</strong> Inspect your commit history and branch structure.</li>
+  <li><strong>Resolving Conflicts:</strong> Handle merge conflicts if they arise.</li>
+</ul>
+
+<h3>Workflow with VS Code</h3>
+
+<p>Combine VS Code and GitHub Desktop:</p>
+
+<ul>
+  <li><strong>VS Code for Editing:</strong> Use VS Code to edit your 11ty files.</li>
+  <li><strong>GitHub Desktop for Git Operations:</strong> Use GitHub Desktop to manage Git.</li>
+  <li><strong>Terminal for Server and Commands:</strong> Use the VS Code terminal for <code>npx @11ty/eleventy --serve</code> and <code>npm run build</code>.</li>
+</ul>
+
+<h3>Revised Workflow Steps (with GitHub Desktop)</h3>
+
+<p>Here's the workflow using GitHub Desktop:</p>
+
+<h4>Repository Restructuring (using GitHub Desktop):</h4>
+
+<ul>
+  <li>Create <code>src</code> branch: In GitHub Desktop, create a new branch named <code>src</code>.</li>
+  <li>Move files: In VS Code, move all source files into the <code>src</code> folder and move `.gitignore`, `CNAME`, `package.json`, `package-lock.json`, and `.eleventy.js` back to the root.</li>
+  <li>Update <code>.eleventy.js</code>: Update the input directory to "src".</li>
+  <li>Create <code>build</code> branch: In GitHub Desktop, create a <code>build</code> branch. Delete all files and copy the <code>CNAME</code> file into the <code>build</code> branch.</li>
+  <li>Commit and push: In GitHub Desktop, commit and push changes to the <code>src</code> branch.</li>
+</ul>
+
+<h4>GitHub Actions Workflow (using VS Code and GitHub Desktop):</h4>
+
+<ul>
+  <li>Create <code>.github/workflows/deploy.yml</code>: In VS Code, create the <code>deploy.yml</code> file.</li>
+  <li>Commit and push: In GitHub Desktop, commit and push the <code>deploy.yml</code> file to the <code>src</code> branch.</li>
+</ul>
+
+<h4>Monitor GitHub Actions:</h4>
+
+<ul>
+  <li>Go to your GitHub repository's "Actions" tab to monitor progress.</li>
+</ul>
+
+<h3>Benefits of Using GitHub Desktop:</h3>
+
+<ul>
+  <li>Visual Interface: Makes Git operations intuitive.</li>
+  <li>Simplified Workflow: Reduces reliance on the command line.</li>
+  <li>Error Prevention: Helps prevent Git mistakes.</li>
+  <li>Improved Collaboration: Facilitates collaboration.</li>
+</ul>
+
+<p>By using GitHub Desktop, you can focus on code in VS Code while GitHub Desktop handles Git, streamlining your workflow.</p>

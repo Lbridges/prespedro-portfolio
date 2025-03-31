@@ -1,0 +1,67 @@
+
+<h1>Branch Management and Workflow Best Practices</h1>
+
+<h2>Maintaining Consistency Between <code>development</code> and <code>src</code> Branches</h2>
+
+<p>The <code>development</code> and <code>src</code> branches should maintain a high degree of consistency, particularly with core project files like <code>.eleventy.js</code>, <code>package.json</code>, and <code>.gitignore</code>. This consistency simplifies the deployment process and reduces the potential for errors.</p>
+
+<h3>Rationale</h3>
+
+<ul>
+  <li><strong>Simplified Workflow:</strong> Consistent configurations across branches minimize the need for branch-specific adjustments, streamlining the development and deployment cycles.</li>
+  <li><strong>Reduced Errors:</strong> Identical configurations reduce the risk of unexpected behavior due to discrepancies between branches.</li>
+  <li><strong>Maintainability:</strong> A consistent structure makes the project easier to understand and maintain, especially for collaborative projects.</li>
+</ul>
+
+<h3><code>package.json</code> Consistency</h3>
+
+<p>The <code>package.json</code> file, which defines project dependencies and scripts, should be identical across both branches.</p>
+
+<ul>
+  <li>While certain scripts (e.g., <code>clean</code>) may be more relevant for local development, maintaining consistency avoids confusion and potential issues during GitHub Actions builds.</li>
+  <li>When adding new dependencies or modifying scripts, ensure that these changes are reflected in both branches.</li>
+</ul>
+
+<h3><code>.eleventy.js</code> and <code>.gitignore</code> Consistency</h3>
+
+<ul>
+  <li>The <code>.eleventy.js</code> file should also be identical across both branches. The input and output directories must match.</li>
+  <li>The <code>.gitignore</code> file must also be identical.</li>
+</ul>
+
+<h2>Efficiently Updating the <code>src</code> Branch</h2>
+
+<p>When updating the <code>src</code> branch with changes from the <code>development</code> branch, it's crucial to avoid copying the entire <code>development</code> branch's contents. This can lead to unintended changes and clutter.</p>
+
+<h3>Recommended Workflow</h3>
+
+<ol>
+  <li><strong>Develop and Test in <code>development</code>:</strong> Make all changes and test them thoroughly in the <code>development</code> branch.</li>
+  <li><strong>Use a "Stash" Folder:</strong>
+    <ul>
+      <li>Create a "stash" folder outside your repository directory.</li>
+      <li>Copy only the <em>changed or added</em> files from the <code>development</code> branch to the "stash" folder.</li>
+    </ul>
+  </li>
+  <li><strong>Switch to <code>src</code> Branch:</strong> Switch to the <code>src</code> branch in GitHub Desktop.</li>
+  <li><strong>Copy from "Stash" to <code>src</code>:</strong> Copy the files from the "stash" folder to the <code>src</code> branch.</li>
+  <li><strong>Commit and Push:</strong> Commit the changes in GitHub Desktop with a clear message, and push them to the remote <code>src</code> branch.</li>
+</ol>
+
+<h3>Rationale</h3>
+
+<ul>
+  <li><strong>Explicit Control:</strong> This method gives you explicit control over which files are transferred.</li>
+  <li><strong>Avoids Unintended Changes:</strong> It prevents accidental copying of unnecessary files (e.g., <code>_site</code>, <code>node_modules</code>).</li>
+  <li><strong>Clear History:</strong> It maintains a clean and organized commit history in the <code>src</code> branch.</li>
+</ul>
+
+<h2>Key Considerations</h2>
+
+<ul>
+  <li><strong>Regular Inspections:</strong> Regularly inspect your branches in GitHub Desktop and on GitHub.com to ensure they are consistent with your intended structure.</li>
+  <li><strong>Branch Awareness:</strong> Always be aware of which branch you are currently working on to avoid accidental commits or file transfers.</li>
+  <li><strong>Version Control Best Practices:</strong> Adhere to version control best practices to maintain a clean and organized repository.</li>
+</ul>
+
+<p>By incorporating these guidelines into your documentation, you'll provide a comprehensive understanding of branch management and best practices for your 11ty project.</p>

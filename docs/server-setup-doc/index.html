@@ -1,0 +1,43 @@
+
+<h1>Initial Server Setup and Environment Configuration</h1>
+
+<h2>Server Setup Challenges</h2>
+
+<p>The initial server setup was a bit rough, primarily due to the difficulty with the Vultr dashboard's terminal and the lack of initial SSH key usage.</p>
+
+<h3>Improvement: SSH Key-Based Authentication</h3>
+
+<p><strong>Recommendation:</strong> Prioritize SSH key-based authentication for security. This eliminates the need for password-based logins, which are vulnerable. Document the initial server setup steps meticulously, including firewall configuration and user creation.</p>
+
+<h3>Accessing the Server</h3>
+
+<p>We encountered difficulties using the terminal provided within the Vultr dashboard. It was not intuitive and presented some usability challenges.</p>
+
+<h3>VS Code WSL Bash Terminal</h3>
+
+<p>To overcome the terminal limitations, we utilized the VS Code WSL bash terminal to establish an SSH connection to the IP address of the shared server. This proved to be a more efficient and familiar approach.</p>
+
+<h3>Installing Node.js, npm, and 11ty</h3>
+
+<p>We used the VS Code WSL bash terminal to install Node.js, npm, and 11ty on the server. We also used it to create a new user and install Certbot for SSL certificate management.</p>
+
+<h3>Nginx Configuration</h3>
+
+<p>Configuring Nginx involved creating symbolic links and setting up the <code>sites-available</code> directory with the project folder. This process was a bit fuzzy and required careful attention to detail.</p>
+
+<h3>File Management</h3>
+
+<p>Initially, we used WinSCP and Nano for file management. However, we found that VS Code and a proper Git workflow are more efficient and streamlined alternatives.</p>
+
+<h3>Connection Issues</h3>
+
+<p>We experienced intermittent connection issues, possibly due to inactivity timeouts or firewall configurations. Further investigation into server-side settings and firewall rules is recommended.</p>
+
+<h2>Key Takeaways</h2>
+
+<ul>
+  <li>Prioritize SSH key-based authentication for improved security.</li>
+  <li>Document the initial server setup steps thoroughly.</li>
+  <li>Consider using VS Code and Git for efficient file management.</li>
+  <li>Investigate and resolve any connection issues related to timeouts or firewalls.</li>
+</ul>
