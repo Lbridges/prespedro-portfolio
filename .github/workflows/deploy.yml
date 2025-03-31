@@ -30,4 +30,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           publish_branch: build
-          cname: presidentpedro.com
+          cname: presidentpedro.com #custom domain
