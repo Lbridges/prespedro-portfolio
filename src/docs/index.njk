@@ -2,21 +2,11 @@
 title: Documentation
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Docs</title>
-</head>
-<body>
-  {% include "../_includes/header.njk" %}
-  <h1>Documentation: President Pedro</h1>
-  <p>This is the documentation archive.</p>
-  <ul>
+{% include "../_includes/header.njk" %}
+<h1>Documentation: President Pedro</h1>
+<p>This is the documentation archive.</p>
+<ul>
   {% for doc in collections.docs %}
     <li><a href="{{ doc.url }}">{{ doc.data.title }}</a></li>
   {% endfor %}
 </ul>
-</body>
-</html>
